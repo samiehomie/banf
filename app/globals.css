@@ -8,20 +8,100 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #fffffff;
+  box-sizing: border-box;
+}
+
+@layer components {
+  .screen-out {
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+    position: absolute;
+    text-indent: -9999px;
+    width: 0;
+  }
+
+  /* icons */
+  .bg-pin {
+    width: 34px;
+    height: 33px;
+    background: url('../public/assets/css_sprites.png') -129px -76px;
+  }
+
+  .bg-logout {
+    width: 31px;
+    height: 31px;
+    background: url('../public/assets/css_sprites.png') -10px -134px;
+  }
+
+  .bg-search {
+    width: 21px;
+    height: 21px;
+    background: url('../public/assets/css_sprites.png') -116px -134px;
+  }
+
+  .bg-active_bell {
+    width: 29px;
+    height: 27px;
+    background: url('../public/assets/css_sprites.png') -186px -10px;
+  }
+
+  .bg-fill_pin {
+    width: 39px;
+    height: 38px;
+    background: url('../public/assets/css_sprites.png') -70px -74px;
+  }
+
+  .bg-red_circle {
+    width: 38px;
+    height: 44px;
+    background: url('../public/assets/css_sprites.png') -10px -10px;
+  }
+
+  .bg-plus {
+    width: 26px;
+    height: 26px;
+    background: url('../public/assets/css_sprites.png') -186px -57px;
+  }
+
+  .bg-yellow_circle {
+    width: 38px;
+    height: 44px;
+    background: url('../public/assets/css_sprites.png') -68px -10px;
+  }
+
+  .bg-red_thermo {
+    width: 40px;
+    height: 40px;
+    background: url('../public/assets/css_sprites.png') -126px -10px;
+  }
+
+  .bg-home_logo {
+    width: 35px;
+    height: 26px;
+    background: url('../public/assets/css_sprites.png') -61px -134px;
+  }
+
+  .bg-bell {
+    width: 24px;
+    height: 24px;
+    background: url('../public/assets/css_sprites.png') -186px -103px;
+  }
+
+  .bg-blue_thermo {
+    width: 40px;
+    height: 40px;
+    background: url('../public/assets/css_sprites.png') -10px -74px;
+  }
 }

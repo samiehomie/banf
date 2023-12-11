@@ -1,0 +1,18 @@
+{
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "prettier.printWidth": 80,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "none",
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "[jsx-tags]": {
+    "editor.defaultFormatter": "bradlc.vscode-tailwindcss"
+  },
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromCodeNavigation": false,
+  "search.exclude": {
+    "**/node_modules": false
+  }
+}
