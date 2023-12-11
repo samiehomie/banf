@@ -1,18 +1,18 @@
 import React from 'react'
 
-const ClearButton = ({
+const MenuButton = ({
   bgClass,
   label,
-  clear
+  active
 }: {
   bgClass: string
   label: string
-  clear?: boolean
+  active?: boolean
 }) => {
   return (
     <button
       className={`w-full h-[45px] rounded-[8px] flex items-center
-            font-normal px-[15px] my-[35px] ${!clear && 'bg-[#005EAD]'}`}
+            font-normal px-[15px] my-[35px] ${!active && 'bg-[#005EAD]'}`}
     >
       <span className="block min-w-[35px] h-full relative">
         <span
@@ -23,7 +23,7 @@ const ClearButton = ({
 
       <span
         className={`${
-          clear ? 'text-[#101828]' : 'text-white'
+          active ? 'text-[#101828]' : 'text-white'
         } text-[20px] font-semibold block w-full tracking-[-0.01em] `}
       >
         {label}
@@ -36,15 +36,19 @@ function MainTemplate({ children }: { children: React.ReactNode }) {
   return (
     <main className="flex w-[1920px] h-[1024px] mx-auto bg-[#f8fafb]">
       <aside className="box-content w-[283px] px-[20px]">
-        <ClearButton label="Home" bgClass="bg-home_logo" />
-        <ClearButton
+        <MenuButton label="Home" bgClass="bg-home_logo" />
+        <MenuButton
           label="Abnormalities Detail"
-          clear={true}
+          active={true}
           bgClass="bg-pin"
         />
-        <ClearButton label="Routes History" clear={true} bgClass="bg-plus" />
+        <MenuButton
+          label="Routes History"
+          active={true}
+          bgClass="bg-fill_plus"
+        />
         <hr className="block my-[45px] w-[70%] mx-auto border-[1.5px]" />
-        <ClearButton label="Routes History" clear={true} bgClass="bg-logout" />
+        <MenuButton label="Routes History" active={true} bgClass="bg-logout" />
       </aside>
       <article className="relative">{children}</article>
     </main>
