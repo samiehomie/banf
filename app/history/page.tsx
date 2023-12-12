@@ -1,8 +1,22 @@
 import React from 'react'
-import SearchInput from '@/components/common/SearchInput'
-import Paging from '@/components/common/Paging'
-import Dropdown from '@/components/common/Dropdown'
 import { dummyData, dataType } from '@/public/data/dummyData'
+import DataTable from '@/components/table-components/DataTable'
+import WhiteBoard from '@/components/common/WhiteBoard'
+import TableHeader from '@/components/table-components/TableHeader'
+import Dropdown from '@/components/common/Dropdown'
+import TableFooter from '@/components/table-components/TableFooter'
+import Paging from '@/components/common/Paging'
+import SearchInput from '@/components/common/SearchInput'
+
+const columns = [
+  'When (Start)',
+  'Vehicle',
+  'Driver/PM',
+  'When (End)',
+  'Location (End)',
+  'Add Note',
+  'Report / Note History'
+]
 
 const TableRow = ({ index, data }: { index: number; data: dataType }) => {
   return (
@@ -26,54 +40,20 @@ const TableRow = ({ index, data }: { index: number; data: dataType }) => {
 
 function page() {
   return (
-    <>
-      <section
-        className="pl-[94px] mt-[25px] w-[1550px] h-[954px] bg-white rounded-[12px] 
-    shadow-[0_20px_60px_0px_rgba(0,0,0,0.05)] border border-[#ECEEF6]"
-      >
-        <header className="h-[130px]">
-          <h2 className="inline-block title pt-[47px] ml-[-35px]">
-            Route History
-          </h2>
-          <div className="inline-block">
-            <span className="text-[13px] tracking-[-0.1px] ml-[374px] leading-[18px]">
-              Sort by
-            </span>
-            <Dropdown />
-          </div>
-        </header>
-        <table className="leading-[16px] text-[12px] text-[#101828]">
-          <thead>
-            <tr>
-              <th className="pb-[20px] pr-[25px] text-center">No</th>
-              <th className="pb-[20px] px-[25px] text-center">When (Start)</th>
-              <th className="pb-[20px] px-[25px] text-center">Vehicle</th>
-              <th className="pb-[20px] px-[25px] text-center">Driver/PM</th>
-              <th className="pb-[20px] px-[25px] text-center">
-                Location (Start)
-              </th>
-              <th className="pb-[20px] px-[25px] text-center">When (End)</th>
-              <th className="pb-[20px] px-[25px] text-center">
-                Location (End)
-              </th>
-              <th className="pb-[20px] px-[25px] text-center">Add Note</th>
-              <th className="pb-[20px] px-[25px] text-center">
-                Report / Note History
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {dummyData.slice(0, 8).map((data, i) => (
-              <TableRow key={i} index={i} data={data} />
-            ))}
-          </tbody>
-        </table>
-        <section className="mt-[45px] ml-[-35px] flex">
-          <SearchInput />
-          <Paging />
-        </section>
-      </section>
-    </>
+    <WhiteBoard>
+      <TableHeader title="Route History">
+        <Dropdown />
+      </TableHeader>
+      <DataTable columns={columns}>
+        {dummyData.slice(0, 8).map((data, i) => (
+          <TableRow key={i} index={i} data={data} />
+        ))}
+      </DataTable>
+      <TableFooter>
+        <SearchInput />
+        <Paging />
+      </TableFooter>
+    </WhiteBoard>
   )
 }
 
