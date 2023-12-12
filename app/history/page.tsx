@@ -1,10 +1,12 @@
 import React from 'react'
 import SearchInput from '@/components/common/SearchInput'
+import Paging from '@/components/common/Paging'
+import Dropdown from '@/components/common/Dropdown'
 import { dummyData, dataType } from '@/public/data/dummyData'
 
 const TableRow = ({ index, data }: { index: number; data: dataType }) => {
   return (
-    <tr>
+    <tr className="hover:bg-gray-50">
       <td className="py-[32px] pr-[25px] text-center">{index + 1}</td>
       <td className="px-[25px] text-center">{data['When']}</td>
       <td className="px-[25px] text-center">{data['Vehicle']}</td>
@@ -30,7 +32,15 @@ function page() {
     shadow-[0_20px_60px_0px_rgba(0,0,0,0.05)] border border-[#ECEEF6]"
       >
         <header className="h-[130px]">
-          <h2 className="title pt-[47px] ml-[-35px]">Route History</h2>
+          <h2 className="inline-block title pt-[47px] ml-[-35px]">
+            Route History
+          </h2>
+          <div className="inline-block">
+            <span className="text-[13px] tracking-[-0.1px] ml-[374px] leading-[18px]">
+              Sort by
+            </span>
+            <Dropdown />
+          </div>
         </header>
         <table className="leading-[16px] text-[12px] text-[#101828]">
           <thead>
@@ -58,9 +68,10 @@ function page() {
             ))}
           </tbody>
         </table>
-        <div className="mt-[45px] ml-[-35px]">
+        <section className="mt-[45px] ml-[-35px] flex">
           <SearchInput />
-        </div>
+          <Paging />
+        </section>
       </section>
     </>
   )

@@ -23,6 +23,16 @@ body {
   color: #101828;
 }
 
+@keyframes animation_up {
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @layer components {
   input::placeholder {
     @apply text-gray-200;
@@ -129,16 +139,58 @@ body {
   }
 
   /* icons sub */
-  .bg-large {
+  .bg-next {
+    width: 17px;
+    height: 16px;
+    background: url('../public/assets/css_sprites_sub.png') -107px -47px;
+  }
+
+  .bg-remove {
+    width: 12px;
+    height: 12px;
+    background: url('../public/assets/css_sprites_sub.png') -46px -106px;
+  }
+
+  .bg-history {
+    width: 24px;
+    height: 24px;
+    background: url('../public/assets/css_sprites_sub.png') -63px -10px;
+  }
+
+  x .bg-large {
     width: 17px;
     height: 17px;
-    background: url('../public/assets/css_sprites_sub.png') -54px -62px;
+    background: url('../public/assets/css_sprites_sub.png') -107px -10px;
   }
 
   .bg-small {
     width: 17px;
     height: 3px;
-    background: url('../public/assets/css_sprites_sub.png') -107px -82px;
+    background: url('../public/assets/css_sprites_sub.png') -107px -83px;
+  }
+
+  .bg-check {
+    width: 12px;
+    height: 12px;
+    background: url('../public/assets/css_sprites_sub.png') -78px -106px;
+  }
+
+  .bg-prev {
+    width: 16px;
+    height: 16px;
+    background: url('../public/assets/css_sprites_sub.png') -10px -106px;
+  }
+
+  .bg-search_black {
+    width: 24px;
+    height: 24px;
+    background: url('../public/assets/css_sprites_sub.png') -10px -62px;
+  }
+
+  .bg-drop {
+    width: 20px;
+    height: 20px;
+    background: url('../public/assets/css_sprites_sub.png') -54px -62px;
   }
 
   .bg-note {
@@ -146,28 +198,9 @@ body {
     height: 32px;
     background: url('../public/assets/css_sprites_sub.png') -10px -10px;
   }
-
-  .bg-left {
-    width: 16px;
-    height: 16px;
-    background: url('../public/assets/css_sprites_sub.png') -107px -46px;
-  }
-
-  .bg-right {
-    width: 17px;
-    height: 16px;
-    background: url('../public/assets/css_sprites_sub.png') -107px -10px;
-  }
-
-  .bg-search_black {
-    width: 24px;
-    height: 24px;
-    background: url('../public/assets/css_sprites_sub.png') -63px -10px;
-  }
-
-  .bg-history {
-    width: 24px;
-    height: 24px;
-    background: url('../public/assets/css_sprites_sub.png') -10px -62px;
+  /* anmiation */
+  .animation-up-50 {
+    animation: animation_up 0.5s;
+    /* transition: opacity 0.2s ease-out 0s, transform 0.5s ease-out 0s; */
   }
 }
