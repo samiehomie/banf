@@ -20,9 +20,13 @@ body {
   color: rgb(var(--foreground-rgb));
   background: #fffffff;
   box-sizing: border-box;
+  color: #101828;
 }
 
 @layer components {
+  input::placeholder {
+    @apply text-gray-200;
+  }
   .screen-out {
     height: 0;
     line-height: 0;
@@ -31,12 +35,49 @@ body {
     text-indent: -9999px;
     width: 0;
   }
-
+  .title {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: -0.2px;
+  }
   /* icons */
-  .bg-home_logo {
+  .bg-home.bg-active {
+    background: url('../public/assets/css_sprites.png') -61px -134px;
+  }
+  .bg-home {
     width: 35px;
     height: 26px;
-    background: url('../public/assets/css_sprites.png') -61px -134px;
+    background: url('../public/assets/css_sprites.png') -116px -134px;
+  }
+
+  .bg-pin {
+    width: 34px;
+    height: 33px;
+    background: url('../public/assets/css_sprites.png') -129px -76px;
+  }
+
+  .bg-pin.bg-active {
+    width: 25px;
+    height: 32px;
+    background: url('../public/assets/css_sprites.png') -186px -10px;
+  }
+
+  .bg-plus {
+    width: 26px;
+    height: 26px;
+    background: url('../public/assets/css_sprites.png') -231px -57px;
+  }
+
+  .bg-plus.bg-active {
+    background: url('../public/assets/css_sprites.png') -231px -103px;
+  }
+
+  .bg-logout {
+    width: 31px;
+    height: 31px;
+    background: url('../public/assets/css_sprites.png') -10px -134px;
   }
 
   .bg-yellow_circle {
@@ -57,37 +98,13 @@ body {
     background: url('../public/assets/css_sprites.png') -231px -10px;
   }
 
-  .bg-fill_plus {
-    width: 26px;
-    height: 26px;
-    background: url('../public/assets/css_sprites.png') -231px -57px;
-  }
-
   .bg-red_thermo {
     width: 40px;
     height: 40px;
     background: url('../public/assets/css_sprites.png') -126px -10px;
   }
 
-  .bg-logout {
-    width: 31px;
-    height: 31px;
-    background: url('../public/assets/css_sprites.png') -10px -134px;
-  }
-
-  .bg-plus {
-    width: 26px;
-    height: 26px;
-    background: url('../public/assets/css_sprites.png') -231px -103px;
-  }
-
-  .bg-pin {
-    width: 34px;
-    height: 33px;
-    background: url('../public/assets/css_sprites.png') -129px -76px;
-  }
-
-  .bg-fill_pin {
+  .bg-fill-pin {
     width: 39px;
     height: 38px;
     background: url('../public/assets/css_sprites.png') -70px -74px;
@@ -97,18 +114,6 @@ body {
     width: 24px;
     height: 24px;
     background: url('../public/assets/css_sprites.png') -186px -62px;
-  }
-
-  .bg-white_pin {
-    width: 25px;
-    height: 32px;
-    background: url('../public/assets/css_sprites.png') -186px -10px;
-  }
-
-  .bg-fill_home_logo {
-    width: 35px;
-    height: 26px;
-    background: url('../public/assets/css_sprites.png') -116px -134px;
   }
 
   .bg-blue_thermo {
@@ -121,5 +126,48 @@ body {
     width: 21px;
     height: 21px;
     background: url('../public/assets/css_sprites.png') -186px -106px;
+  }
+
+  /* icons sub */
+  .bg-large {
+    width: 17px;
+    height: 17px;
+    background: url('../public/assets/css_sprites_sub.png') -54px -62px;
+  }
+
+  .bg-small {
+    width: 17px;
+    height: 3px;
+    background: url('../public/assets/css_sprites_sub.png') -107px -82px;
+  }
+
+  .bg-note {
+    width: 33px;
+    height: 32px;
+    background: url('../public/assets/css_sprites_sub.png') -10px -10px;
+  }
+
+  .bg-left {
+    width: 16px;
+    height: 16px;
+    background: url('../public/assets/css_sprites_sub.png') -107px -46px;
+  }
+
+  .bg-right {
+    width: 17px;
+    height: 16px;
+    background: url('../public/assets/css_sprites_sub.png') -107px -10px;
+  }
+
+  .bg-search_black {
+    width: 24px;
+    height: 24px;
+    background: url('../public/assets/css_sprites_sub.png') -63px -10px;
+  }
+
+  .bg-history {
+    width: 24px;
+    height: 24px;
+    background: url('../public/assets/css_sprites_sub.png') -10px -62px;
   }
 }
