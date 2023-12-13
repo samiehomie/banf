@@ -12,6 +12,7 @@ const columns = [
   'When (Start)',
   'Vehicle',
   'Driver/PM',
+  'Location (Start)',
   'When (End)',
   'Location (End)',
   'Add Note',

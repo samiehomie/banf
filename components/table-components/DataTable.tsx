@@ -8,7 +8,7 @@ function DataTable({
   columns: Array<string>
 }) {
   return (
-    <table className="leading-[16px] text-[12px] text-[#101828]">
+    <table className="flex-1 leading-[16px] text-[12px] text-[#101828]">
       <thead>
         <tr>
           <th className="pb-[20px] pr-[25px] text-center">No</th>

@@ -8,7 +8,7 @@ function Dropdown() {
     document.addEventListener('click', function handler(e) {
       if (
         e.target instanceof HTMLElement &&
-        !e.target.matches('#sorts, #sorts *') &&
+        !e.target.matches('.sorts, .sorts *') &&
         expanded
       ) {
         setExpanded(false)
@@ -20,8 +20,7 @@ function Dropdown() {
   return (
     <div className="inline-block relative text-[14px] leading-[20px] tracking-[-0.1px]">
       <div
-        id="sorts"
-        className="ml-[16px] h-[40px] w-[102px] rounded-[8px] shadow-custom
+        className="sorts ml-[16px] h-[40px] w-[102px] rounded-[8px] shadow-custom
          relative hover:bg-gray-50
       "
       >
@@ -46,7 +45,7 @@ function Dropdown() {
         tabIndex={-1}
         className={`${
           !expanded && 'hidden'
-        } animation-up-50 absolute right-0 shadow-custom mt-[10px] bg-white`}
+        } animation-up-50 absolute right-0 shadow-custom mt-[10px] bg-white z-50`}
       >
         <div role="none" className="w-[150px] rounded-[8px]">
           <div
