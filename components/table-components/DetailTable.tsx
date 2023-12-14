@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -6,35 +7,54 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { dummyData } from '@/public/data/dummyData'
 import Paging from '@/components/common/Paging'
 import SearchInput from '@/components/common/SearchInput'
 import Dropdown from '@/components/common/Dropdown'
-
+import { dateFormatter } from '@/lib/tools'
 
 function createData(
   when: string,
   vehicle: string,
   location: string,
   riskLevel: string,
-  resolved: boolean
+  resolved: boolean,
+  completed?: string
 ) {
-  return { when, vehicle, location, riskLevel, resolved }
+  return { when, vehicle, location, riskLevel, resolved, completed }
 }
 
-const rows = dummyData
-  .slice(0, 9)
-  .map((data) =>
-    createData(
-      data['When'],
-      data['Vehicle'],
-      data['Location'],
-      data['Risk Level'],
-      data['Resolved?']
+const BasicTable = ({
+  title,
+  response
+}: {
+  title: string
+  response: notionPage[]
+}) => {
+  const [sort, setSort] = useState<'when' | 'vehicle' | 'riskLevel'>('when')
+  const rows = response
+    .slice(0, 9)
+    .map((data) =>
+      createData(
+        data.properties.when['rich_text'][0].text.content,
+        data.properties.vehicle.title[0].text.content,
+        data.properties.location['rich_text'][0].text.content,
+        data.properties.riskLevel.select.name,
+        data.properties.resolved.checkbox,
+        data.properties.completed.date?.start
+      )
     )
-  )
+    .sort((prev, next) => {
+      const prevValue = sort === 'when' ? new Date(prev[sort]) : prev[sort]
+      const nextValue = sort === 'when' ? new Date(next[sort]) : next[sort]
 
-const DetailTable = ({ title }: { title: string }) => {
+      if (prevValue < nextValue) {
+        return -1
+      }
+      if (prevValue > nextValue) {
+        return 1
+      }
+      return 0
+    })
   return (
     <>
       <TableContainer
@@ -45,8 +65,8 @@ const DetailTable = ({ title }: { title: string }) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-evenly',
-          ':first-child': { paddingRight: '30px' },
-          ':last-child': { paddingLeft: '30px' },
+          ':first-of-type': { paddingRight: '30px' },
+          ':last-of-type': { paddingLeft: '30px' },
           borderRadius: '12px'
         }}
       >
@@ -56,7 +76,7 @@ const DetailTable = ({ title }: { title: string }) => {
             <span className="text-[13px] tracking-[-0.1px] leading-[18px]">
               Sort by
             </span>
-            <Dropdown />
+            <Dropdown sort={sort} setSort={setSort} />
           </div>
         </header>
         <Table
@@ -99,13 +119,13 @@ const DetailTable = ({ title }: { title: string }) => {
                   align="center"
                   sx={{ display: 'flex', justifyContent: 'space-evenly' }}
                 >
-                  {row.resolved ? (
+                  {!row.resolved ? (
                     <>
-                      <span className="block bg-check" />
-                      <span className="block bg-remove" />
+                      <button className="block bg-check" />
+                      <button className="block bg-remove" />
                     </>
                   ) : (
-                    'July 1, 2023'
+                    dateFormatter(row.completed)
                   )}
                 </TableCell>
               </TableRow>
@@ -121,18 +141,21 @@ const DetailTable = ({ title }: { title: string }) => {
   )
 }
 
-export default function BasicTable() {
+export default function DetailTable({ response }: { response: notionPage[] }) {
   return (
     <div
       className="flex mt-[25px] w-[1550px] h-[954px] bg-white rounded-[12px] 
     shadow-custom border border-[#ECEEF6] px-[30px] relative"
     >
-      <DetailTable title="Pothole History" />
+      <BasicTable title="Pothole History" response={response} />
       <div
         className="h-[862px] w-[5px] bg-[#C4C4C4] absolute z-50 
       top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       />
-      <DetailTable title="Road Temperature / Slippery Road History" />
+      <BasicTable
+        title="Road Temperature / Slippery Road History"
+        response={response}
+      />
     </div>
   )
 }

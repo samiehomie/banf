@@ -1,7 +1,13 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 
-function Dropdown() {
+function Dropdown({
+  sort,
+  setSort
+}: {
+  sort: string
+  setSort: (arg: 'when' | 'vehicle' | 'riskLevel') => void
+}) {
   const [expanded, setExpanded] = useState(false)
 
   useEffect(() => {
@@ -16,11 +22,12 @@ function Dropdown() {
       }
     })
   }, [expanded])
-
+  const sortSelected =
+    sort === 'when' ? 'Recent' : sort === 'riskLevel' ? 'Risk Level' : 'Vehicle'
   return (
     <div className="inline-block relative text-[14px] leading-[20px] tracking-[-0.1px]">
       <div
-        className="sorts ml-[16px] h-[40px] w-[102px] rounded-[8px] shadow-custom
+        className="sorts ml-[16px] h-[40px] w-[117px] rounded-[8px] shadow-custom
          relative hover:bg-gray-50
       "
       >
@@ -31,7 +38,7 @@ function Dropdown() {
           className="inline-block w-full text-left py-[10px] px-[16px]"
           onClick={() => setExpanded(!expanded)}
         >
-          <span>Recent</span>
+          <span>{sortSelected}</span>
           <span
             aria-hidden="true"
             className="block bg-drop absolute right-[12px] top-1/2 -translate-y-1/2"
@@ -52,6 +59,7 @@ function Dropdown() {
             role="menuitem"
             tabIndex={-1}
             className="p-[10px] hover:bg-gray-50"
+            onClick={() => setSort('when')}
           >
             Recent
           </div>
@@ -59,15 +67,17 @@ function Dropdown() {
             role="menuitem"
             tabIndex={-1}
             className="p-[10px] hover:bg-gray-50"
+            onClick={() => setSort('vehicle')}
           >
-            Driver
+            Vehicle
           </div>
           <div
             role="menuitem"
             tabIndex={-1}
             className="p-[10px] hover:bg-gray-50"
+            onClick={() => setSort('riskLevel')}
           >
-            Location
+            Risk Level
           </div>
         </div>
       </div>

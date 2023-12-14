@@ -1,0 +1,113 @@
+{
+  "object": "page",
+  "id": "a8c6c8f8-4cdf-457d-91b3-b577bf398ff7",
+  "created_time": "2023-12-14T09:57:00.000Z",
+  "last_edited_time": "2023-12-14T11:04:00.000Z",
+  "created_by": {
+    "object": "user",
+    "id": "c26e24ca-efe2-4954-90b7-90701d68cfc6"
+  },
+  "last_edited_by": {
+    "object": "user",
+    "id": "c26e24ca-efe2-4954-90b7-90701d68cfc6"
+  },
+  "cover": null,
+  "icon": null,
+  "parent": {
+    "type": "database_id",
+    "database_id": "41943904-7cb6-48a1-9a5c-2b0844915540"
+  },
+  "archived": false,
+  "properties": {
+    "completed": {
+      "id": "%3AGJx",
+      "type": "date",
+      "date": null
+    },
+    "resolved": {
+      "id": "%3FlPS",
+      "type": "checkbox",
+      "checkbox": false
+    },
+    "riskLevel": {
+      "id": "T%5CD%5D",
+      "type": "select",
+      "select": {
+        "id": "b5cfbd49-d8d5-4988-9061-b4145f5bfb0b",
+        "name": "Danger",
+        "color": "yellow"
+      }
+    },
+    "location": {
+      "id": "%5Bssg",
+      "type": "rich_text",
+      "rich_text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "37.500725285, 127.036600396",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "37.500725285, 127.036600396",
+          "href": null
+        }
+      ]
+    },
+    "when": {
+      "id": "sv%5CM",
+      "type": "rich_text",
+      "rich_text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "December 1, 2023 14:01:35",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "December 1, 2023 14:01:35",
+          "href": null
+        }
+      ]
+    },
+    "vehicle": {
+      "id": "title",
+      "type": "title",
+      "title": [
+        {
+          "type": "text",
+          "text": {
+            "content": "BANF01",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "BANF01",
+          "href": null
+        }
+      ]
+    }
+  },
+  "url": "https://www.notion.so/BANF01-a8c6c8f84cdf457d91b3b577bf398ff7",
+  "public_url": null
+}
