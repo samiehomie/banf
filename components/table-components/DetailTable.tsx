@@ -11,8 +11,11 @@ import Paging from '@/components/common/Paging'
 import SearchInput from '@/components/common/SearchInput'
 import Dropdown from '@/components/common/Dropdown'
 import { dateFormatter } from '@/lib/tools'
+import fetchJson from '@/lib/fetchJson'
+import { revalidateTagAction } from '@/lib/actions'
 
 function createData(
+  pageId: string,
   when: string,
   vehicle: string,
   location: string,
@@ -20,21 +23,26 @@ function createData(
   resolved: boolean,
   completed?: string
 ) {
-  return { when, vehicle, location, riskLevel, resolved, completed }
+  return { pageId, when, vehicle, location, riskLevel, resolved, completed }
 }
 
-const BasicTable = ({
+export const BasicTable = ({
   title,
-  response
+  response,
+  pageNumber
 }: {
   title: string
   response: notionPage[]
+  pageNumber: number
 }) => {
   const [sort, setSort] = useState<'when' | 'vehicle' | 'riskLevel'>('when')
+  const start = (pageNumber - 1) * 9
+  const end = pageNumber * 9
   const rows = response
-    .slice(0, 9)
+    .slice(start, end)
     .map((data) =>
       createData(
+        data.id,
         data.properties.when['rich_text'][0].text.content,
         data.properties.vehicle.title[0].text.content,
         data.properties.location['rich_text'][0].text.content,
@@ -46,7 +54,6 @@ const BasicTable = ({
     .sort((prev, next) => {
       const prevValue = sort === 'when' ? new Date(prev[sort]) : prev[sort]
       const nextValue = sort === 'when' ? new Date(next[sort]) : next[sort]
-
       if (prevValue < nextValue) {
         return -1
       }
@@ -81,8 +88,6 @@ const BasicTable = ({
         </header>
         <Table
           sx={{
-            width: '100%',
-
             'td, th': {
               border: 0,
               fontSize: '12px',
@@ -109,8 +114,10 @@ const BasicTable = ({
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <TableRow key={index} hover={true}>
-                <TableCell align="center">{index + 1}</TableCell>
+              <TableRow key={row.pageId} hover={true}>
+                <TableCell align="center">
+                  {index + 1 + 9 * (pageNumber - 1)}
+                </TableCell>
                 <TableCell align="center">{row.when}</TableCell>
                 <TableCell align="center">{row.vehicle}</TableCell>
                 <TableCell align="center">{row.location}</TableCell>
@@ -121,8 +128,36 @@ const BasicTable = ({
                 >
                   {!row.resolved ? (
                     <>
-                      <button className="block bg-check" />
-                      <button className="block bg-remove" />
+                      <button
+                        className="block bg-check"
+                        onClick={async () => {
+                          await fetchJson('http://localhost:3000/api/query', {
+                            method: 'PATCH',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                              pageId: row.pageId
+                            })
+                          })
+                          await revalidateTagAction('detail')
+                        }}
+                      />
+                      <button
+                        className="block bg-remove"
+                        onClick={async () => {
+                          await fetchJson('http://localhost:3000/api/remove', {
+                            method: 'PATCH',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                              pageId: row.pageId
+                            })
+                          })
+                          await revalidateTagAction('detail')
+                        }}
+                      />
                     </>
                   ) : (
                     dateFormatter(row.completed)
@@ -141,19 +176,30 @@ const BasicTable = ({
   )
 }
 
-export default function DetailTable({ response }: { response: notionPage[] }) {
+export default function DetailTable({
+  response,
+  pageNumber
+}: {
+  response: notionPage[]
+  pageNumber: number
+}) {
   return (
     <div
       className="flex mt-[25px] w-[1550px] h-[954px] bg-white rounded-[12px] 
     shadow-custom border border-[#ECEEF6] px-[30px] relative"
     >
-      <BasicTable title="Pothole History" response={response} />
+      <BasicTable
+        title="Pothole History"
+        pageNumber={pageNumber}
+        response={response}
+      />
       <div
         className="h-[862px] w-[5px] bg-[#C4C4C4] absolute z-50 
       top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       />
       <BasicTable
         title="Road Temperature / Slippery Road History"
+        pageNumber={pageNumber}
         response={response}
       />
     </div>
