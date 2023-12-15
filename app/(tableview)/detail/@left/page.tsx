@@ -1,10 +1,9 @@
 import React from 'react'
-import { BasicTable } from '@/components/table-components/DetailTable'
 import fetchJson from '@/lib/fetchJson'
 import PaginatedItems from '@/components/common/PaginatedItmes'
 
 export default async function Page() {
-  const response = await fetchJson<notionPage[]>(
+  const response = await fetchJson<notionPageDetail[]>(
     'http://localhost:3000/api/query',
     {
       next: { tags: [`detail`] },
@@ -17,8 +16,17 @@ export default async function Page() {
       })
     }
   )
-  return <PaginatedItems title='Pothole History' items={response} itemsPerPage={9} />
-  // return <BasicTable title="Pothole History" response={response} />
+  return (
+    <PaginatedItems
+      title="Pothole History"
+      items={response}
+      itemsPerPage={9}
+      extraStyle={{
+        width: '50%',
+        paddingRight: '30px'
+      }}
+    />
+  )
 }
 
 export const revalidate = 3600

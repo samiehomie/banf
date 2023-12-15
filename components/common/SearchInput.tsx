@@ -4,14 +4,17 @@ import { debounce } from 'lodash'
 
 function SearchInput({
   inputValue,
-  setInputValue
+  setInputValue,
+  setItemOffset
 }: {
   inputValue: string
   setInputValue: (onSearch: string) => void
+  setItemOffset: (offset: number) => void
 }) {
   const onInput = debounce(function (e: FormEvent<HTMLInputElement>) {
     if (e.target && e.target instanceof HTMLInputElement) {
       setInputValue(e.target.value)
+      setItemOffset(0)
     }
   }, 200)
 

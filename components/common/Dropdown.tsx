@@ -6,7 +6,7 @@ function Dropdown({
   setSort
 }: {
   sort: string
-  setSort: (arg: 'when' | 'vehicle' | 'riskLevel') => void
+  setSort: (arg: any) => void
 }) {
   const [expanded, setExpanded] = useState(false)
 

@@ -1,24 +1,61 @@
 'use client'
 import React, { useState } from 'react'
 import ReactPaginate from 'react-paginate'
-import { BasicTable } from '../table-components/DetailTable'
+import { DetailTable, HistoryTable } from '../table-components/DataTables'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import SearchInput from '@/components/common/SearchInput'
 
-export default function PaginatedItems({
+function isNotionPageDetail(
+  items: notionPageDetail[] | notionPageHistory[]
+): items is notionPageDetail[] {
+  return (items as notionPageDetail[])[0].properties.riskLevel !== undefined
+}
+function isSideDefined(
+  side: 'left' | 'right' | undefined
+): side is 'left' | 'right' {
+  return side !== undefined
+}
+
+function PaginatedItems({
   title,
   items,
-  itemsPerPage
+  itemsPerPage,
+  extraStyle
 }: {
   title: string
-  items: notionPage[]
+  items: notionPageHistory[]
   itemsPerPage: number
+  extraStyle?: {}
+}): React.ReactNode
+function PaginatedItems({
+  title,
+  items,
+  itemsPerPage,
+  extraStyle
+}: {
+  title: string
+  items: notionPageDetail[]
+  itemsPerPage: number
+  extraStyle?: {}
+}): React.ReactNode
+
+function PaginatedItems({
+  title,
+  items,
+  itemsPerPage,
+  extraStyle
+}: {
+  title: string
+  items: notionPageDetail[] | notionPageHistory[]
+  itemsPerPage: number
+  extraStyle?: {}
 }) {
   const [itemOffset, setItemOffset] = useState(0)
   const [inputValue, setInputValue] = useState('')
 
   const endOffset = itemOffset + itemsPerPage
+
   const itemsFiltered = items.filter((item) => {
     if (inputValue.length > 0) {
       return item.properties.location['rich_text'][0].plain_text.startsWith(
@@ -27,6 +64,7 @@ export default function PaginatedItems({
     }
     return item
   })
+
   const currentItems = itemsFiltered.slice(itemOffset, endOffset)
   const pageCount = Math.ceil(itemsFiltered.length / itemsPerPage)
 
@@ -40,24 +78,37 @@ export default function PaginatedItems({
       component={Paper}
       sx={{
         boxShadow: 'none',
-        width: '50%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
-        ':first-of-type': { paddingRight: '30px' },
-        ':last-of-type': { paddingLeft: '30px' },
-        borderRadius: '12px'
+        borderRadius: '12px',
+        ...extraStyle
       }}
     >
-      <BasicTable
-        title={title}
-        response={currentItems}
-        startNumber={itemOffset}
-        itemsPerPage={itemsPerPage}
-      />
-      <div className="flex justify-between pl-[5px] pr-[10px]">
-        <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
+      {isNotionPageDetail(items) ? (
+        <DetailTable
+          title={title}
+          response={currentItems as notionPageDetail[]}
+          startNumber={itemOffset}
+          itemsPerPage={itemsPerPage}
+        />
+      ) : (
+        <HistoryTable
+          title={title}
+          response={currentItems as notionPageHistory[]}
+          startNumber={itemOffset}
+          itemsPerPage={itemsPerPage}
+        />
+      )}
+
+      <div className={`${isNotionPageDetail(items) ? 'flex justify-between pl-[5px] pr-[10px]' : 'flex pt-[30px] ml-[-30px]'}`}>
+        <SearchInput
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          setItemOffset={setItemOffset}
+        />
         <ReactPaginate
+          key={inputValue}
           breakLabel="..."
           previousLinkClassName="block relative w-[32px] h-[32px] rounded-[50px] shadow-custom"
           previousLabel={
@@ -72,7 +123,7 @@ export default function PaginatedItems({
           marginPagesDisplayed={1}
           pageCount={pageCount}
           renderOnZeroPageCount={null}
-          containerClassName="flex justify-between w-[315px] h-[32px] items-center"
+          containerClassName={`flex justify-between w-[315px] h-[32px] items-center ${!isNotionPageDetail(items) && 'ml-[86px]'}`}
           pageClassName="block text-[12px] tracking-[-0.1px]"
           activeLinkClassName="text-[#1192FF]"
         />
@@ -80,3 +131,5 @@ export default function PaginatedItems({
     </TableContainer>
   )
 }
+
+export default PaginatedItems

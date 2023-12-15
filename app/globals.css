@@ -157,7 +157,7 @@ body {
     background: url('../public/assets/css_sprites_sub.png') -63px -10px;
   }
 
-  x .bg-large {
+  .bg-large {
     width: 17px;
     height: 17px;
     background: url('../public/assets/css_sprites_sub.png') -107px -10px;
