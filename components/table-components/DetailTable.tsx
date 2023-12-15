@@ -25,11 +25,13 @@ function createData(
 export const BasicTable = ({
   title,
   response,
-  startNumber
+  startNumber,
+  itemsPerPage
 }: {
   title: string
   response: notionPage[]
   startNumber: number
+  itemsPerPage: number
 }) => {
   const [sort, setSort] = useState<'when' | 'vehicle' | 'riskLevel'>('when')
   const rows = response
@@ -143,6 +145,13 @@ export const BasicTable = ({
               </TableCell>
             </TableRow>
           ))}
+          {response.length < itemsPerPage && (
+            <TableRow
+              sx={{
+                height: `${65.12 * (itemsPerPage - response.length)}px`
+              }}
+            ></TableRow>
+          )}
         </TableBody>
       </Table>
     </>

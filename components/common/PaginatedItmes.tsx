@@ -53,6 +53,7 @@ export default function PaginatedItems({
         title={title}
         response={currentItems}
         startNumber={itemOffset}
+        itemsPerPage={itemsPerPage}
       />
       <div className="flex justify-between pl-[5px] pr-[10px]">
         <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
