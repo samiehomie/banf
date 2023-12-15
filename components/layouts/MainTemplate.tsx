@@ -7,7 +7,7 @@ function MainTemplate({ children }: { children: React.ReactNode }) {
       <aside className="box-content w-[283px] px-[20px]">
         <MenuButton path="/" label="Home" bgClass="bg-home" />
         <MenuButton
-          path="/detail/1"
+          path="/detail"
           label="Abnormalities Detail"
           bgClass="bg-pin"
         />

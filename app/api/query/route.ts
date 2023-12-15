@@ -1,12 +1,12 @@
 import { Client } from '@notionhq/client'
 
 const notion = new Client({ auth: process.env.NOTION_KEY })
-const databaseId = process.env.NOTION_DATABASE_ID
+// const databaseId = process.env.NOTION_DATABASE_ID
 
 export async function POST(req: Request) {
-  // const { sort } = await req.json()
+  const { databaseId } = await req.json()
   const response = await notion.databases.query({
-    database_id: databaseId!,
+    database_id: databaseId,
     // page_size: 9,
     // start_cursor: '1',
     filter: {
@@ -22,7 +22,6 @@ export async function POST(req: Request) {
       }
     ]
   })
-  console.log('res', response)
   return Response.json(response.results)
 }
 
