@@ -1,8 +1,19 @@
 'use client'
-import React, { useState } from 'react'
+import React, { FormEvent } from 'react'
+import { debounce } from 'lodash'
 
-function SearchInput() {
-  const [inputValue, setInputValue] = useState('')
+function SearchInput({
+  inputValue,
+  setInputValue
+}: {
+  inputValue: string
+  setInputValue: (onSearch: string) => void
+}) {
+  const onInput = debounce(function (e: FormEvent<HTMLInputElement>) {
+    if (e.target && e.target instanceof HTMLInputElement) {
+      setInputValue(e.target.value)
+    }
+  }, 200)
 
   return (
     <div className="relative">
@@ -19,7 +30,7 @@ function SearchInput() {
         placeholder="Search Location"
         className="py-[8px] px-[38px] h-[36px] w-[282px] text-[20px]
         rounded-[8px] border border-[#D0D5DD] bg-white focus:outline-blue-100"
-        onInput={(e) => setInputValue(e.currentTarget.value)}
+        onChange={onInput}
       />
     </div>
   )

@@ -16,10 +16,19 @@ export default function PaginatedItems({
   itemsPerPage: number
 }) {
   const [itemOffset, setItemOffset] = useState(0)
+  const [inputValue, setInputValue] = useState('')
 
   const endOffset = itemOffset + itemsPerPage
-  const currentItems = items.slice(itemOffset, endOffset)
-  const pageCount = Math.ceil(items.length / itemsPerPage)
+  const itemsFiltered = items.filter((item) => {
+    if (inputValue.length > 0) {
+      return item.properties.location['rich_text'][0].plain_text.startsWith(
+        inputValue
+      )
+    }
+    return item
+  })
+  const currentItems = itemsFiltered.slice(itemOffset, endOffset)
+  const pageCount = Math.ceil(itemsFiltered.length / itemsPerPage)
 
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % items.length
@@ -46,7 +55,7 @@ export default function PaginatedItems({
         startNumber={itemOffset}
       />
       <div className="flex justify-between pl-[5px] pr-[10px]">
-        <SearchInput />
+        <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
         <ReactPaginate
           breakLabel="..."
           previousLinkClassName="block relative w-[32px] h-[32px] rounded-[50px] shadow-custom"
