@@ -4,7 +4,7 @@ import MenuButton from '../common/MenuButton'
 function MainTemplate({ children }: { children: React.ReactNode }) {
   return (
     <main className="flex w-[1920px] h-[1024px] mx-auto bg-[#f8fafb]">
-      <aside className="box-content w-[283px] px-[20px]">
+      <aside className="w-[323px] px-[20px]">
         <MenuButton path="/" label="Home" bgClass="bg-home" />
         <MenuButton
           path="/detail"
@@ -31,7 +31,7 @@ function MainTemplate({ children }: { children: React.ReactNode }) {
           </span>
         </button>
       </aside>
-      <article className="relative">{children}</article>
+      <article className="relative w-[1597px] h-full">{children}</article>
     </main>
   )
 }
