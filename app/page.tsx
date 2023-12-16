@@ -1,10 +1,9 @@
-import Image from 'next/image'
-import sampleMap from '@/public/assets/sample_map.png'
+import BanfMap from '@/components/BanfMap'
+
+const apiKey = process.env.GOOGLE_MAPS_API_KEY
 
 export default function Home() {
   return (
-    <div>
-      <Image src={sampleMap} alt="map" />
-    </div>
+    <BanfMap mapKey={apiKey!} />
   )
 }

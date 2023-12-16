@@ -1,5 +1,5 @@
 import React from 'react'
-import BanfMap from './BanfMap'
+import BanfMap from '../../components/BanfMap'
 
 const mapKey = process.env.GOOGLE_MAPS_API_KEY
 
