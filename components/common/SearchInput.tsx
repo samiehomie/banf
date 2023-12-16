@@ -5,21 +5,26 @@ import { debounce } from 'lodash'
 function SearchInput({
   inputValue,
   setInputValue,
+  extraStyle,
   setItemOffset
 }: {
   inputValue: string
   setInputValue: (onSearch: string) => void
-  setItemOffset: (offset: number) => void
+  extraStyle?: {}
+  setItemOffset?: (offset: number) => void
 }) {
   const onInput = debounce(function (e: FormEvent<HTMLInputElement>) {
     if (e.target && e.target instanceof HTMLInputElement) {
       setInputValue(e.target.value)
-      setItemOffset(0)
+      if (setItemOffset) setItemOffset(0)
     }
   }, 200)
 
   return (
-    <div className="relative">
+    <div
+      className={` relative h-[36px] w-[282px] rounded-[8px] border border-[#D0D5DD] bg-white`}
+      style={{ ...extraStyle }}
+    >
       <label
         htmlFor="search"
         className={`inline-block bg-search_black absolute 
@@ -31,8 +36,7 @@ function SearchInput({
         id="search"
         type="text"
         placeholder="Search Location"
-        className="py-[8px] px-[38px] h-[36px] w-[282px] text-[20px]
-        rounded-[8px] border border-[#D0D5DD] bg-white focus:outline-blue-100"
+        className="py-[8px] px-[39px] h-full w-full text-[20px] bg-transparent focus:outline-none"
         onChange={onInput}
       />
     </div>

@@ -10,10 +10,10 @@ function ControlPanel() {
       <div className="flex justify-center items-center pb-[34px]">
         <span className="block bg-fill-pin" />
         <div className="pl-[20px]">
-          <h3 className="text-[16px] font-[700] text-[#232323] tracking-[0.18px]">
+          <h3 className="text-[18px] font-[700] text-[#232323] tracking-[0.18px]">
             2972 Westheimer
           </h3>
-          <div className="text-[12px] text-[#B0B0B0] tracking-[-0.17px]">
+          <div className="text-[12px] text-[#B0B0B0] tracking-[-0.17px] semi-word-space">
             Rd. Santa Ana, Illinois 85486
           </div>
         </div>
@@ -36,7 +36,7 @@ function ControlPanel() {
               x Pothole Depth Deep
             </span>
           </div>
-          <div className="inline-flex items-center ml-[11px]">
+          <div className="inline-flex items-center ml-[14px]">
             <span className="inline-block bg-red_thermo" />
             <span className="text-[12px] italic tracking-[0.14px] text-[#B0B0B0] font-[600]">
               Asphalt Overheating
@@ -45,12 +45,12 @@ function ControlPanel() {
         </div>
         <div className="flex justify-start my-[20px]">
           <div className="inline-flex items-center">
-            <span className="inline-block bg-red_circle mr-[5px]" />
+            <span className="inline-block bg-yellow_circle mr-[5px]" />
             <span className="text-[12px] italic tracking-[0.14px] text-[#B0B0B0] font-[600]">
               x Pothole Depth Warning
             </span>
           </div>
-          <div className="inline-flex items-center ml-[-5px]">
+          <div className="inline-flex items-center ml-[-3px]">
             <span className="inline-block bg-blue_thermo" />
             <span className="text-[12px] italic tracking-[0.14px] text-[#B0B0B0] font-[600]">
               Asphalt Freezing

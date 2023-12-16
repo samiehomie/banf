@@ -205,6 +205,9 @@ body {
   }
 
   .thin-word-space {
-    word-space: -1.5px;
+    word-spacing: -1.6px;
+  }
+  .semi-word-space {
+    word-spacing: -1px;
   }
 }
