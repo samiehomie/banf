@@ -108,12 +108,6 @@ body {
     background: url('../public/assets/css_sprites.png') -231px -10px;
   }
 
-  .bg-red_thermo {
-    width: 40px;
-    height: 40px;
-    background: url('../public/assets/css_sprites.png') -126px -10px;
-  }
-
   .bg-fill-pin {
     width: 39px;
     height: 38px;
@@ -127,9 +121,15 @@ body {
   }
 
   .bg-blue_thermo {
-    width: 40px;
-    height: 40px;
+    width: 37px;
+    height: 37px;
     background: url('../public/assets/css_sprites.png') -10px -74px;
+  }
+
+  .bg-red_thermo {
+    width: 37px;
+    height: 37px;
+    background: url('../public/assets/css_sprites.png') -126px -10px;
   }
 
   .bg-search {
@@ -202,5 +202,9 @@ body {
   .animation-up-50 {
     animation: animation_up 0.5s;
     /* transition: opacity 0.2s ease-out 0s, transform 0.5s ease-out 0s; */
+  }
+
+  .thin-word-space {
+    word-space: -1.5px;
   }
 }

@@ -6,21 +6,30 @@ import {
   Map,
   Pin,
   AdvancedMarker,
-  Marker
+  useMarkerRef,
+  Marker,
+  InfoWindow
 } from '@vis.gl/react-google-maps'
+import ControlPannel from './ControlPannel'
 
 function BanfMap({ mapKey }: { mapKey: string }) {
+  const [markerRef, marker] = useMarkerRef()
   return (
     <APIProvider apiKey={mapKey}>
       <Map
         styles={noMarkMapStyle}
         disableDefaultUI={true}
-        zoom={14}
+        zoom={15}
         controlSize={0}
-        center={{ lat: 40.633813, lng: -89.398421 }}
+        center={{ lat: 29.742175, lng: -95.42219 }}
       >
-        <Marker position={{ lat: 40.633813, lng: -89.398421 }} />
+        <Marker ref={markerRef} position={{ lat: 29.742175, lng: -95.42219 }} />
+        <InfoWindow anchor={marker}>
+          <h2>Hello everyone!</h2>
+          <p>This is an Info Window</p>
+        </InfoWindow>
       </Map>
+      <ControlPannel />
     </APIProvider>
   )
 }
