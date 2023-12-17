@@ -18,70 +18,176 @@ const latOffset = 0.008
 const lngOffset = 0.0075
 const initialPosition = { lat: 29.738387, lng: -95.424789 }
 
-const PathCold = () => {
-  const [mapService, setMapService] = useState<google.maps.Polyline>()
-  const mapsLibrary = useMapsLibrary('maps')
+function calculateAndDisplayRoute(
+  directionsService: google.maps.DirectionsService,
+  directionsRenderer: google.maps.DirectionsRenderer,
+  paths: string[]
+) {
+  directionsService
+    .route({
+      origin: {
+        query: paths[0]
+      },
+      destination: {
+        query: paths[1]
+      },
+      travelMode: google.maps.TravelMode.DRIVING
+    })
+    .then((response) => {
+      directionsRenderer.setDirections(response)
+    })
+    .catch((e) => window.alert('Directions request failed due to ' + status))
+}
+
+const PathZero = () => {
+  const [directionsService, setDirectionsService] =
+    useState<google.maps.DirectionsService>()
+  const [directionsRenderer, setDirectionsRenderer] =
+    useState<google.maps.DirectionsRenderer>()
+  const mapsLibrary = useMapsLibrary('routes')
   const map = useMap('map-main')
 
   useEffect(() => {
     if (!mapsLibrary) return
-    setMapService(
-      new mapsLibrary.Polyline({
-        path: [
-          { lat: 29.738387, lng: -95.424789 },
-          { lat: 29.742181, lng: -95.426534 }
-        ],
-        geodesic: true,
-        strokeColor: '#0094FF',
-        strokeOpacity: 0.4,
-        strokeWeight: 25
+    setDirectionsRenderer(
+      new mapsLibrary.DirectionsRenderer({
+        polylineOptions: {
+          strokeColor: '#0094FF',
+          strokeOpacity: 0.4,
+          strokeWeight: 15
+        }
       })
     )
-    // do something with the map instance
+    setDirectionsService(new mapsLibrary.DirectionsService())
   }, [mapsLibrary])
 
   useEffect(() => {
-    if (!mapService) return
+    if (!directionsRenderer) return
     if (!map) return
-    mapService.setMap(map)
-    // ...use placesService...
-  }, [mapService, map])
+    if (!directionsService) return
+    directionsRenderer.setMap(map)
+    calculateAndDisplayRoute(directionsService, directionsRenderer, [
+      '29.738387, -95.424789',
+      '29.742181, -95.426534'
+    ])
+  }, [directionsRenderer, directionsService, map])
   return <></>
 }
 
-const PathNormal = () => {
-  const [mapService, setMapService] = useState<google.maps.Polyline>()
-  const mapsLibrary = useMapsLibrary('maps')
-  const map = useMap('map-main')
+// const PathOne = () => {
+//   const [directionsService, setDirectionsService] =
+//     useState<google.maps.DirectionsService>()
+//   const [directionsRenderer, setDirectionsRenderer] =
+//     useState<google.maps.DirectionsRenderer>()
+//   const mapsLibrary = useMapsLibrary('routes')
+//   const map = useMap('map-main')
 
-  useEffect(() => {
-    if (!mapsLibrary) return
-    setMapService(
-      new mapsLibrary.Polyline({
-        path: [
-          { lat: 29.738387, lng: -95.424789 },
-          { lat: 29.742181, lng: -95.426534 },
-          { lat: 29.747848, lng: -95.426557 },
-          { lat: 29.751872, lng: -95.433187 },
-          { lat: 29.749944, lng: -95.437125 }
-        ],
-        geodesic: true,
-        strokeColor: '#05E400',
-        strokeOpacity: 1,
-        strokeWeight: 5
-      })
-    )
-    // do something with the map instance
-  }, [mapsLibrary])
+//   useEffect(() => {
+//     if (!mapsLibrary) return
+//     setDirectionsRenderer(new mapsLibrary.DirectionsRenderer())
+//     setDirectionsService(new mapsLibrary.DirectionsService())
+//   }, [mapsLibrary])
 
-  useEffect(() => {
-    if (!mapService) return
-    if (!map) return
-    mapService.setMap(map)
-    // ...use placesService...
-  }, [mapService, map])
-  return <></>
-}
+//   useEffect(() => {
+//     if (!directionsRenderer) return
+//     if (!map) return
+//     if (!directionsService) return
+//     directionsRenderer.setMap(map)
+//     calculateAndDisplayRoute(directionsService, directionsRenderer, [
+//       `29.742181, -95.426534`,
+//       '29.747848, -95.426557'
+//     ])
+//   }, [directionsRenderer, directionsService, map])
+//   return <></>
+// }
+
+// const PathTwo = () => {
+//   const [directionsService, setDirectionsService] =
+//     useState<google.maps.DirectionsService>()
+//   const [directionsRenderer, setDirectionsRenderer] =
+//     useState<google.maps.DirectionsRenderer>()
+//   const mapsLibrary = useMapsLibrary('routes')
+//   const map = useMap('map-main')
+
+//   useEffect(() => {
+//     if (!mapsLibrary) return
+//     setDirectionsRenderer(new mapsLibrary.DirectionsRenderer())
+//     setDirectionsService(new mapsLibrary.DirectionsService())
+//   }, [mapsLibrary])
+
+//   useEffect(() => {
+//     if (!directionsRenderer) return
+//     if (!map) return
+//     if (!directionsService) return
+//     directionsRenderer.setMap(map)
+//     calculateAndDisplayRoute(directionsService, directionsRenderer, [
+//       '29.747848, -95.426557',
+//       '29.751872, -95.433187'
+//     ])
+//   }, [directionsRenderer, directionsService, map])
+//   return <></>
+// }
+
+// const PathThree = () => {
+//   const [directionsService, setDirectionsService] =
+//     useState<google.maps.DirectionsService>()
+//   const [directionsRenderer, setDirectionsRenderer] =
+//     useState<google.maps.DirectionsRenderer>()
+//   const mapsLibrary = useMapsLibrary('routes')
+//   const map = useMap('map-main')
+
+//   useEffect(() => {
+//     if (!mapsLibrary) return
+//     setDirectionsRenderer(new mapsLibrary.DirectionsRenderer())
+//     setDirectionsService(new mapsLibrary.DirectionsService())
+//   }, [mapsLibrary])
+
+//   useEffect(() => {
+//     if (!directionsRenderer) return
+//     if (!map) return
+//     if (!directionsService) return
+//     directionsRenderer.setMap(map)
+//     calculateAndDisplayRoute(directionsService, directionsRenderer, [
+//       '29.751872, -95.433187',
+//       '29.749944, -95.437125'
+//     ])
+//   }, [directionsRenderer, directionsService, map])
+//   return <></>
+// }
+
+// const PathNormal = () => {
+//   const [mapService, setMapService] = useState<google.maps.Polyline>()
+//   const mapsLibrary = useMapsLibrary('maps')
+//   const map = useMap('map-main')
+
+//   useEffect(() => {
+//     if (!mapsLibrary) return
+//     setMapService(
+//       new mapsLibrary.Polyline({
+//         path: [
+//           { lat: 29.738387, lng: -95.424789 },
+//           { lat: 29.742181, lng: -95.426534 },
+//           { lat: 29.747848, lng: -95.426557 },
+//           { lat: 29.751872, lng: -95.433187 },
+//           { lat: 29.749944, lng: -95.437125 }
+//         ],
+//         geodesic: true,
+//         strokeColor: '#05E400',
+//         strokeOpacity: 1,
+//         strokeWeight: 5
+//       })
+//     )
+//     // do something with the map instance
+//   }, [mapsLibrary])
+
+//   useEffect(() => {
+//     if (!mapService) return
+//     if (!map) return
+//     mapService.setMap(map)
+//     // ...use placesService...
+//   }, [mapService, map])
+//   return <></>
+// }
 
 function BanfMap({ mapKey }: { mapKey: string }) {
   const [searchWord, setSearchWord] = useState('')
@@ -169,8 +275,7 @@ function BanfMap({ mapKey }: { mapKey: string }) {
             <div className="bg-car" />
           </AdvancedMarker>
         </Map>
-        <PathNormal />
-        <PathCold />
+        <PathZero />
         <ControlPannel />
       </APIProvider>
     </>
