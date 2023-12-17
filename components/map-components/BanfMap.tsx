@@ -10,10 +10,17 @@ import {
   AdvancedMarker,
   useMarkerRef,
   Marker,
-  InfoWindow
+  InfoWindow,
+  limitTiltRange
 } from '@vis.gl/react-google-maps'
+import { GoogleMapsOverlay } from '@deck.gl/google-maps'
+
 import ControlPannel from './ControlPannel'
-import MarkerLabel from './MarkerLabel'
+import { MarkerLabel, MarkerLabelEnd } from './MarkerLabel'
+
+const latOffset = 0.008
+const lngOffset = 0.0025
+const initialPosition = { lat: 29.738387, lng: -95.424789 }
 
 function BanfMap({ mapKey }: { mapKey: string }) {
   const [markerRef, marker] = useMarkerRef()
@@ -41,17 +48,42 @@ function BanfMap({ mapKey }: { mapKey: string }) {
           disableDefaultUI={true}
           zoom={16}
           controlSize={0}
-          center={{ lat: 29.742175, lng: -95.42219 }}
+          center={{
+            lat: initialPosition.lat + latOffset,
+            lng: initialPosition.lng - lngOffset
+          }}
           mapId={'7e7c3ef84026886b'}
           clickableIcons={false}
         >
+          <AdvancedMarker
+            position={{ lat: 29.749944, lng: -95.437125 }}
+            className="pointer-events-on"
+          >
+            <MarkerLabelEnd
+              sortClass="bg-fill-pin"
+              address="2972 Westheimer"
+              detailAddress="Rd. Santa Ana, Illinois 85486"
+            />
+          </AdvancedMarker>
+          <AdvancedMarker
+            position={{ lat: 29.751872, lng: -95.433187 }}
+            className="pointer-events-on"
+          >
+            <MarkerLabel
+              timestamp="August 1, 2023 EST 16:31:35"
+              sortClass="bg-red_thermo"
+              position="29.742181, -95.426534"
+              sortText="51℃"
+              pageId=""
+            />
+          </AdvancedMarker>
           <AdvancedMarker
             position={{ lat: 29.747848, lng: -95.426557 }}
             className="pointer-events-on"
           >
             <MarkerLabel
               timestamp="August 1, 2023 EST 16:31:35"
-              sortClass="bg-yellow_circle"
+              sortClass="bg-red_circle"
               position="29.747848, -95.426557"
               sortText="Danger"
               pageId=""
@@ -63,15 +95,15 @@ function BanfMap({ mapKey }: { mapKey: string }) {
           >
             <MarkerLabel
               timestamp="August 1, 2023 EST 16:31:35"
-              sortClass="bg-yellow_circle"
+              sortClass="bg-blue_thermo"
               position="29.742181, -95.426534"
-              sortText="Danger"
+              sortText="-1℃"
               pageId=""
             />
           </AdvancedMarker>
           <AdvancedMarker
             position={{ lat: 29.738387, lng: -95.424789 }}
-            className="pointer-events-on"
+            className=""
           >
             <div className="bg-car" />
           </AdvancedMarker>

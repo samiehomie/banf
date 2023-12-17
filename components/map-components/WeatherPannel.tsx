@@ -4,7 +4,7 @@ function WeatherPannel() {
   return (
     <div
       className="w-[722px] h-[155px] rounded-[8px] bg-white px-[24px] py-[15px]
-    absolute z-[99999] top-[42px] right-[51.71px] flex flex-col justify-between"
+    absolute z-10 top-[42px] right-[51.71px] flex flex-col justify-between"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center">

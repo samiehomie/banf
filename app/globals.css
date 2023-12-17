@@ -254,5 +254,8 @@ body {
   }
   .pointer-events-on {
     pointer-events: auto !important;
+    position: absolute;
+    top: -65px;
+    left: 1px;
   }
 }
