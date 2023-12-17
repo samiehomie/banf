@@ -240,11 +240,19 @@ body {
     height: 41px;
     background: url('../public/assets/css_sprites_weather.png') -10px -10px;
   }
+  .bg-car {
+    width: 32px;
+    height: 16px;
+    background: url('../public/assets/car.png');
+  }
   /* word spacing */
   .thin-word-space {
     word-spacing: -1.6px;
   }
   .semi-word-space {
     word-spacing: -1px;
+  }
+  .pointer-events-on {
+    pointer-events: auto !important;
   }
 }

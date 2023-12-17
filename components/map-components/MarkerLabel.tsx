@@ -18,7 +18,7 @@ function MarkerLabel({
   return (
     <div
       className="flex justify-evenly items-center box-content w-[261px] h-[62px] rounded-[12px] 
-    border border-[#ECEEF6] absolute z-[9999] left-[900px] top-[300px]
+    border border-[#ECEEF6] z-[9999] 
     bg-white shadow-[0px_20px_60px_0px_rgba(0,0,0,0.05)]"
     >
       <div>

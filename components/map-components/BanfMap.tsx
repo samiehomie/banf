@@ -34,29 +34,47 @@ function BanfMap({ mapKey }: { mapKey: string }) {
         }}
       />
       <WeatherPannel />
-      <MarkerLabel
-        timestamp="August 1, 2023 EST 16:31:35"
-        sortClass="bg-yellow_circle"
-        position="29.742175, -95.42219"
-        sortText="Danger"
-        pageId=''
-      />
+
       <APIProvider apiKey={mapKey}>
         <Map
           styles={noMarkMapStyle}
           disableDefaultUI={true}
-          zoom={15}
+          zoom={16}
           controlSize={0}
           center={{ lat: 29.742175, lng: -95.42219 }}
+          mapId={'7e7c3ef84026886b'}
+          clickableIcons={false}
         >
-          <Marker
-            ref={markerRef}
-            position={{ lat: 29.742175, lng: -95.42219 }}
-          />
-          <InfoWindow anchor={marker}>
-            <h2>Hello everyone!</h2>
-            <p>This is an Info Window</p>
-          </InfoWindow>
+          <AdvancedMarker
+            position={{ lat: 29.747848, lng: -95.426557 }}
+            className="pointer-events-on"
+          >
+            <MarkerLabel
+              timestamp="August 1, 2023 EST 16:31:35"
+              sortClass="bg-yellow_circle"
+              position="29.747848, -95.426557"
+              sortText="Danger"
+              pageId=""
+            />
+          </AdvancedMarker>
+          <AdvancedMarker
+            position={{ lat: 29.742181, lng: -95.426534 }}
+            className="pointer-events-on"
+          >
+            <MarkerLabel
+              timestamp="August 1, 2023 EST 16:31:35"
+              sortClass="bg-yellow_circle"
+              position="29.742181, -95.426534"
+              sortText="Danger"
+              pageId=""
+            />
+          </AdvancedMarker>
+          <AdvancedMarker
+            position={{ lat: 29.738387, lng: -95.424789 }}
+            className="pointer-events-on"
+          >
+            <div className="bg-car" />
+          </AdvancedMarker>
         </Map>
         <ControlPannel />
       </APIProvider>
@@ -65,3 +83,4 @@ function BanfMap({ mapKey }: { mapKey: string }) {
 }
 
 export default BanfMap
+// 29.742147, -95.426514
