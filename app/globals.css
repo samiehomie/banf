@@ -254,8 +254,12 @@ body {
   }
   .pointer-events-on {
     pointer-events: auto !important;
-    position: absolute;
-    top: -65px;
-    left: 1px;
+    position: relative;
+    top: 5px;
+    left: -130px;
+  }
+  .start-car {
+    position: relative;
+    top: 5px;
   }
 }

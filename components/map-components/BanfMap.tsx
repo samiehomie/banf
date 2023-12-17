@@ -1,29 +1,89 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SearchInput from '../common/SearchInput'
 import WeatherPannel from './WeatherPannel'
 import { noMarkMapStyle } from '@/lib/tools'
 import {
   APIProvider,
   Map,
-  Pin,
   AdvancedMarker,
-  useMarkerRef,
-  Marker,
-  InfoWindow,
-  limitTiltRange
+  useMapsLibrary,
+  useMap
 } from '@vis.gl/react-google-maps'
-import { GoogleMapsOverlay } from '@deck.gl/google-maps'
 
 import ControlPannel from './ControlPannel'
 import { MarkerLabel, MarkerLabelEnd } from './MarkerLabel'
 
 const latOffset = 0.008
-const lngOffset = 0.0025
+const lngOffset = 0.0075
 const initialPosition = { lat: 29.738387, lng: -95.424789 }
 
+const PathCold = () => {
+  const [mapService, setMapService] = useState<google.maps.Polyline>()
+  const mapsLibrary = useMapsLibrary('maps')
+  const map = useMap('map-main')
+
+  useEffect(() => {
+    if (!mapsLibrary) return
+    setMapService(
+      new mapsLibrary.Polyline({
+        path: [
+          { lat: 29.738387, lng: -95.424789 },
+          { lat: 29.742181, lng: -95.426534 }
+        ],
+        geodesic: true,
+        strokeColor: '#0094FF',
+        strokeOpacity: 0.4,
+        strokeWeight: 25
+      })
+    )
+    // do something with the map instance
+  }, [mapsLibrary])
+
+  useEffect(() => {
+    if (!mapService) return
+    if (!map) return
+    mapService.setMap(map)
+    // ...use placesService...
+  }, [mapService, map])
+  return <></>
+}
+
+const PathNormal = () => {
+  const [mapService, setMapService] = useState<google.maps.Polyline>()
+  const mapsLibrary = useMapsLibrary('maps')
+  const map = useMap('map-main')
+
+  useEffect(() => {
+    if (!mapsLibrary) return
+    setMapService(
+      new mapsLibrary.Polyline({
+        path: [
+          { lat: 29.738387, lng: -95.424789 },
+          { lat: 29.742181, lng: -95.426534 },
+          { lat: 29.747848, lng: -95.426557 },
+          { lat: 29.751872, lng: -95.433187 },
+          { lat: 29.749944, lng: -95.437125 }
+        ],
+        geodesic: true,
+        strokeColor: '#05E400',
+        strokeOpacity: 1,
+        strokeWeight: 5
+      })
+    )
+    // do something with the map instance
+  }, [mapsLibrary])
+
+  useEffect(() => {
+    if (!mapService) return
+    if (!map) return
+    mapService.setMap(map)
+    // ...use placesService...
+  }, [mapService, map])
+  return <></>
+}
+
 function BanfMap({ mapKey }: { mapKey: string }) {
-  const [markerRef, marker] = useMarkerRef()
   const [searchWord, setSearchWord] = useState('')
 
   return (
@@ -44,9 +104,10 @@ function BanfMap({ mapKey }: { mapKey: string }) {
 
       <APIProvider apiKey={mapKey}>
         <Map
+          id="map-main"
           styles={noMarkMapStyle}
           disableDefaultUI={true}
-          zoom={16}
+          zoom={15.8}
           controlSize={0}
           center={{
             lat: initialPosition.lat + latOffset,
@@ -103,11 +164,13 @@ function BanfMap({ mapKey }: { mapKey: string }) {
           </AdvancedMarker>
           <AdvancedMarker
             position={{ lat: 29.738387, lng: -95.424789 }}
-            className=""
+            className="start-car"
           >
             <div className="bg-car" />
           </AdvancedMarker>
         </Map>
+        <PathNormal />
+        <PathCold />
         <ControlPannel />
       </APIProvider>
     </>
@@ -115,4 +178,3 @@ function BanfMap({ mapKey }: { mapKey: string }) {
 }
 
 export default BanfMap
-// 29.742147, -95.426514
