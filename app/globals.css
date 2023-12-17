@@ -92,13 +92,13 @@ body {
 
   .bg-yellow_circle {
     width: 38px;
-    height: 44px;
+    height: 40px;
     background: url('../public/assets/css_sprites.png') -10px -10px;
   }
 
   .bg-red_circle {
     width: 38px;
-    height: 44px;
+    height: 40px;
     background: url('../public/assets/css_sprites.png') -68px -10px;
   }
 
@@ -121,15 +121,15 @@ body {
   }
 
   .bg-blue_thermo {
-    width: 37px;
-    height: 37px;
-    background: url('../public/assets/css_sprites.png') -10px -74px;
+    width: 32px;
+    height: 34px;
+    background: url('../public/assets/css_sprites.png') -13px -77px;
   }
 
   .bg-red_thermo {
-    width: 37px;
-    height: 37px;
-    background: url('../public/assets/css_sprites.png') -126px -10px;
+    width: 32px;
+    height: 34px;
+    background: url('../public/assets/css_sprites.png') -128px -13px;
   }
 
   .bg-search {
@@ -204,6 +204,43 @@ body {
     /* transition: opacity 0.2s ease-out 0s, transform 0.5s ease-out 0s; */
   }
 
+  /* icons weather */
+  .bg-rain {
+    width: 20px;
+    height: 21px;
+    background: url('../public/assets/css_sprites_weather.png') -10px -71px;
+  }
+
+  .bg-thunder {
+    width: 21px;
+    height: 21px;
+    background: url('../public/assets/css_sprites_weather.png') -70px -10px;
+  }
+
+  .bg-sun {
+    width: 19px;
+    height: 19px;
+    background: url('../public/assets/css_sprites_weather.png') -50px -71px;
+  }
+
+  .bg-cloudy {
+    width: 21px;
+    height: 21px;
+    background: url('../public/assets/css_sprites_weather.png') -111px -10px;
+  }
+
+  .bg-suncloudy {
+    width: 20px;
+    height: 21px;
+    background: url('../public/assets/css_sprites_weather.png') -90px -71px;
+  }
+
+  .bg-bigsun {
+    width: 40px;
+    height: 41px;
+    background: url('../public/assets/css_sprites_weather.png') -10px -10px;
+  }
+  /* word spacing */
   .thin-word-space {
     word-spacing: -1.6px;
   }

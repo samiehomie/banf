@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import SearchInput from './common/SearchInput'
+import SearchInput from '../common/SearchInput'
+import WeatherPannel from './WeatherPannel'
 import { noMarkMapStyle } from '@/lib/tools'
 import {
   APIProvider,
@@ -12,6 +13,7 @@ import {
   InfoWindow
 } from '@vis.gl/react-google-maps'
 import ControlPannel from './ControlPannel'
+import MarkerLabel from './MarkerLabel'
 
 function BanfMap({ mapKey }: { mapKey: string }) {
   const [markerRef, marker] = useMarkerRef()
@@ -30,6 +32,14 @@ function BanfMap({ mapKey }: { mapKey: string }) {
           top: '39px',
           left: '59px'
         }}
+      />
+      <WeatherPannel />
+      <MarkerLabel
+        timestamp="August 1, 2023 EST 16:31:35"
+        sortClass="bg-yellow_circle"
+        position="29.742175, -95.42219"
+        sortText="Danger"
+        pageId=''
       />
       <APIProvider apiKey={mapKey}>
         <Map
