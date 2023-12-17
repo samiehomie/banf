@@ -1,21 +1,30 @@
 import { Client } from '@notionhq/client'
 
 const notion = new Client({ auth: process.env.NOTION_KEY })
-// const databaseId = process.env.NOTION_DATABASE_ID
 
 export async function POST(req: Request) {
-  const { databaseId } = await req.json()
+  const { databaseId, region } = await req.json()
   const response = await notion.databases.query({
     database_id: databaseId,
     filter: {
-      property: 'show',
-      checkbox: {
-        equals: true
-      }
+      and: [
+        {
+          property: 'show',
+          checkbox: {
+            equals: true
+          }
+        },
+        {
+          property: 'region',
+          rich_text: {
+            contains: region
+          }
+        }
+      ],
     },
     sorts: [
       {
-        property: 'vehicle',
+        property: 'order',
         direction: 'ascending'
       }
     ]

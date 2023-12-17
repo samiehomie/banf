@@ -201,3 +201,122 @@ type notionPageHistory = {
   url: string
   public_url?: string
 }
+
+type notionMap = {
+  object: 'page'
+  id: string
+  created_time: string
+  last_edited_time: string
+  created_by: {
+    object: 'user'
+    id: string
+  }
+  last_edited_by: {
+    object: 'user'
+    id: string
+  }
+  parent: {
+    type: 'database_id'
+    database_id: string
+  }
+  properties: {
+    when: {
+      id: string
+      type: 'rich_text'
+      rich_text: [
+        {
+          type: 'text'
+          text: {
+            content: string
+            link?: string
+          }
+          plain_text: string
+          href?: string
+        }
+      ]
+    }
+    start: {
+      id: string
+      type: 'rich_text'
+      rich_text: [
+        {
+          type: 'text'
+          text: {
+            content: string
+          }
+          plain_text: string
+        }
+      ]
+    }
+    resolved: {
+      id: string
+      type: 'checkbox'
+      checkbox: boolean
+    }
+    condition: {
+      id: string
+      type: 'select'
+      select: {
+        id: string
+        name: 'cold' | 'hot' | 'normal' | 'danger'
+      }
+    }
+    show: {
+      id: string
+      type: 'checkbox'
+      checkbox: boolean
+    }
+    order: {
+      id: string
+      type: 'number'
+      number: number
+    }
+    vehicle: {
+      id: string
+      type: 'rich_text'
+      rich_text: [
+        {
+          type: 'text'
+          text: {
+            content: string
+          }
+
+          plain_text: string
+        }
+      ]
+    }
+    completed: {
+      id: string
+      type: 'date'
+      date?: {
+        start: string
+      }
+    }
+    end: {
+      id: string
+      type: 'rich_text'
+      rich_text: [
+        {
+          type: 'text'
+          text: {
+            content: string
+          }
+          plain_text: string
+        }
+      ]
+    }
+    region: {
+      id: string
+      type: 'title'
+      title: [
+        {
+          type: 'text'
+          text: {
+            content: string
+          }
+          plain_text: string
+        }
+      ]
+    }
+  }
+}

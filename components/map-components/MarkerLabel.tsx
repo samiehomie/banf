@@ -37,13 +37,15 @@ export function MarkerLabel({
   position,
   sortClass,
   sortText,
-  pageId
+  pageId,
+  resolved
 }: {
   timestamp: string
   position: string
   sortClass: string
   sortText: string
   pageId: string
+  resolved: boolean
 }) {
   return (
     <div
@@ -62,36 +64,40 @@ export function MarkerLabel({
         </div>
       </div>
       <div>
-        <button
-          className="block bg-check mb-[8px]"
-          onClick={async () => {
-            await fetchJson('http://localhost:3000/api/query', {
-              method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                pageId: pageId
-              })
-            })
-            await revalidateTagAction('detail')
-          }}
-        />
-        <button
-          className="block bg-remove"
-          onClick={async () => {
-            await fetchJson('http://localhost:3000/api/remove', {
-              method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                pageId: pageId
-              })
-            })
-            await revalidateTagAction('detail')
-          }}
-        />
+        {!resolved && (
+          <>
+            <button
+              className="block bg-check mb-[8px]"
+              onClick={async () => {
+                await fetchJson('http://localhost:3000/api/map', {
+                  method: 'PATCH',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    pageId: pageId
+                  })
+                })
+                await revalidateTagAction('map')
+              }}
+            />
+            <button
+              className="block bg-remove"
+              onClick={async () => {
+                await fetchJson('http://localhost:3000/api/remove', {
+                  method: 'PATCH',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    pageId: pageId
+                  })
+                })
+                await revalidateTagAction('map')
+              }}
+            />
+          </>
+        )}
       </div>
     </div>
   )
