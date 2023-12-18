@@ -1,10 +1,11 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, FormEvent } from 'react'
 import ReactPaginate from 'react-paginate'
 import { DetailTable, HistoryTable } from '../table-components/DataTables'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import SearchInput from '@/components/common/SearchInput'
+import { debounce } from 'lodash'
 
 function isNotionPageDetail(
   items: notionPageDetail[] | notionPageHistory[]
@@ -101,11 +102,23 @@ function PaginatedItems({
         />
       )}
 
-      <div className={`${isNotionPageDetail(items) ? 'flex justify-between pl-[5px] pr-[10px]' : 'flex pt-[30px] ml-[-30px]'}`}>
+      <div
+        className={`${
+          isNotionPageDetail(items)
+            ? 'flex justify-between pl-[5px] pr-[10px]'
+            : 'flex pt-[30px] ml-[-30px]'
+        }`}
+      >
         <SearchInput
           inputValue={inputValue}
           setInputValue={setInputValue}
           setItemOffset={setItemOffset}
+          onChange={debounce(function (e: FormEvent<HTMLInputElement>) {
+            if (e.target && e.target instanceof HTMLInputElement) {
+              setInputValue(e.target.value)
+              if (setItemOffset) setItemOffset(0)
+            }
+          }, 200)}
         />
         <ReactPaginate
           key={inputValue}
@@ -123,7 +136,9 @@ function PaginatedItems({
           marginPagesDisplayed={1}
           pageCount={pageCount}
           renderOnZeroPageCount={null}
-          containerClassName={`flex justify-between w-[315px] h-[32px] items-center ${!isNotionPageDetail(items) && 'ml-[86px]'}`}
+          containerClassName={`flex justify-between w-[315px] h-[32px] items-center ${
+            !isNotionPageDetail(items) && 'ml-[86px]'
+          }`}
           pageClassName="block text-[12px] tracking-[-0.1px]"
           activeLinkClassName="text-[#1192FF]"
         />

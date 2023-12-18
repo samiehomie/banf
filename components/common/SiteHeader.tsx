@@ -1,6 +1,7 @@
 import React from 'react'
 import Logo from './Logo'
 import Avatar from './Avatar'
+import Link from 'next/link'
 
 function SiteHeader() {
   return (
@@ -12,7 +13,10 @@ function SiteHeader() {
         className="max-w-[1920px] mx-auto flex flex-row 
                     justify-between items-center"
       >
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
+
         <div className="flex justify-between w-[98.6px] items-center">
           <div className="bg-active_bell">
             <span className="screen-out">알림</span>

@@ -44,3 +44,22 @@ export class FetchError extends Error {
     this.data = data ?? { message: message }
   }
 }
+
+export const fetcher = (region: string, databaseId: string) => async (url: string) => {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      databaseId,
+      region
+    })
+  })
+
+  if (!response.ok) {
+    throw new Error('An error occurred while fetching the data.')
+  }
+
+  return response.json()
+}

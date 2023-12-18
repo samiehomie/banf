@@ -1,7 +1,9 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import SearchInput from '../common/SearchInput'
 import WeatherPannel from './WeatherPannel'
+import useSWR from 'swr'
+import { fetcher } from '@/lib/fetchJson'
 import { noMarkMapStyle } from '@/lib/tools'
 import {
   APIProvider,
@@ -17,7 +19,6 @@ import { dateFormatter } from '@/lib/tools'
 
 const latOffset = 0.008
 const lngOffset = 0.0075
-const initialPosition = { lat: 29.738387, lng: -95.424789 }
 
 const MapMark = ({
   end,
@@ -167,13 +168,13 @@ const Path = ({
     const options =
       condition === 'cold'
         ? {
-            strokeColor: '#0094FF',
+            strokeColor: '#005EAD',
             strokeOpacity: 0.4,
             strokeWeight: 15
           }
         : condition === 'hot'
         ? { strokeColor: '#FF0000', strokeOpacity: 0.4, strokeWeight: 15 }
-        : { strokeColor: '#05E400', strokeOpacity: 0.4, strokeWeight: 5 }
+        : { strokeColor: '#05E400', strokeOpacity: 1, strokeWeight: 3 }
 
     setDirectionsRenderer(
       new mapsLibrary.DirectionsRenderer({
@@ -198,27 +199,51 @@ const Path = ({
 
 function BanfMap({
   mapKey,
-  response
+  databaseId
 }: {
   mapKey: string
-  response: notionMap[]
+  databaseId: string
 }) {
-  const [searchWord, setSearchWord] = useState('')
-
+  const [searchWord, setSearchWord] = useState('2972 Westheimer')
+  const inputRef = useRef<HTMLInputElement>(null)
+  const { data: response, error } = useSWR<notionMap[]>(
+    'http://localhost:3000/api/map',
+    fetcher(searchWord, databaseId)
+  )
+  if (error) return null
+  if (!response) return null
+  const [initialLat, initialLng] =
+    response[0].properties.start.rich_text[0].plain_text.split(',').map(Number)
   return (
     <>
-      <SearchInput
-        inputValue={searchWord}
-        setInputValue={setSearchWord}
-        extraStyle={{
-          position: 'absolute',
-          zIndex: '9999',
-          width: '372px',
-          height: '70px',
-          top: '39px',
-          left: '59px'
+      <form
+        className="absolute z-[9999] top-[39px] left-[59px]"
+        onSubmit={(e) => {
+          e.preventDefault()
         }}
-      />
+      >
+        <SearchInput
+          inputValue={searchWord}
+          setInputValue={setSearchWord}
+          extraStyle={{
+            width: '372px',
+            height: '70px',
+            paddingRight: '30px'
+          }}
+          ref={inputRef}
+        />
+        <button
+          onClick={() => {
+            if (inputRef && inputRef.current) {
+              setSearchWord(inputRef.current.value)
+            }
+          }}
+          className="z-[9999] bg-[#35a0f8fd] text-white h-[67.5px] border-1 border-[#D0D5DD]
+          rounded-[0px_8px_8px_0px] text-[10px] px-[5px] absolute top-[1px] right-[1px]"
+        >
+          search
+        </button>
+      </form>
       <WeatherPannel />
       <APIProvider apiKey={mapKey}>
         <Map
@@ -228,8 +253,8 @@ function BanfMap({
           zoom={15.8}
           controlSize={0}
           center={{
-            lat: initialPosition.lat + latOffset,
-            lng: initialPosition.lng - lngOffset
+            lat: initialLat + latOffset,
+            lng: initialLng - lngOffset
           }}
           mapId={'7e7c3ef84026886b'}
           clickableIcons={false}
@@ -269,7 +294,17 @@ function BanfMap({
             />
           )
         })}
-        <ControlPannel />
+        {response.map((data) => {
+          return (
+            <Path
+              key={data.id}
+              condition="normal"
+              start={data.properties.start.rich_text[0].plain_text}
+              end={data.properties.end.rich_text[0].plain_text}
+            />
+          )
+        })}
+        <ControlPannel response={response} />
       </APIProvider>
     </>
   )
