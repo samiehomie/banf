@@ -1,6 +1,7 @@
 import React from 'react'
 import fetchJson from '@/lib/fetchJson'
 import { revalidateTagAction } from '@/lib/actions'
+import { fetcher } from '@/lib/fetchJson'
 
 export function MarkerLabelEnd({
   sortClass,
@@ -38,7 +39,8 @@ export function MarkerLabel({
   sortClass,
   sortText,
   pageId,
-  resolved
+  resolved,
+  mapMutate
 }: {
   timestamp: string
   position: string
@@ -46,6 +48,7 @@ export function MarkerLabel({
   sortText: string
   pageId: string
   resolved: boolean
+  mapMutate: (arg: any, arg2: any) => any
 }) {
   return (
     <div
@@ -69,31 +72,53 @@ export function MarkerLabel({
             <button
               className="block bg-check mb-[8px]"
               onClick={async () => {
-                await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/map`, {
-                  method: 'PATCH',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                    pageId: pageId
-                  })
-                })
-                await revalidateTagAction('map')
+                mapMutate(
+                  await fetchJson(
+                    `${process.env.NEXT_PUBLIC_FRONT_URL}/api/map`,
+                    {
+                      method: 'PATCH',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        pageId: pageId
+                      })
+                    }
+                  ),
+                  false
+                )
               }}
+              // onClick={async () => {
+              //   await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/map`, {
+              //     method: 'PATCH',
+              //     headers: {
+              //       'Content-Type': 'application/json'
+              //     },
+              //     body: JSON.stringify({
+              //       pageId: pageId
+              //     })
+              //   })
+              //   await revalidateTagAction('map')
+              // }}
             />
             <button
               className="block bg-remove"
               onClick={async () => {
-                await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/remove`, {
-                  method: 'PATCH',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                    pageId: pageId
-                  })
-                })
-                await revalidateTagAction('map')
+                mapMutate(
+                  await fetchJson(
+                    `${process.env.NEXT_PUBLIC_FRONT_URL}/api/remove`,
+                    {
+                      method: 'PATCH',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        pageId: pageId
+                      })
+                    }
+                  ),
+                  false
+                )
               }}
             />
           </>

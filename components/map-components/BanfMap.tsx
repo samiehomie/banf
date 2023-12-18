@@ -1,9 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import WeatherPannel from './WeatherPannel'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { fetcher } from '@/lib/fetchJson'
-import { noMarkMapStyle } from '@/lib/tools'
 import {
   APIProvider,
   Map,
@@ -53,6 +52,7 @@ const MapMark = ({
             sortText="-1℃"
             pageId={pageId}
             resolved={resolved}
+            mapMutate={mutate}
           />
         </AdvancedMarker>
       )
@@ -71,6 +71,7 @@ const MapMark = ({
             sortText="51℃"
             pageId={pageId}
             resolved={resolved}
+            mapMutate={mutate}
           />
         </AdvancedMarker>
       )
@@ -89,6 +90,7 @@ const MapMark = ({
             sortText="Damger"
             pageId={pageId}
             resolved={resolved}
+            mapMutate={mutate}
           />
         </AdvancedMarker>
       )
