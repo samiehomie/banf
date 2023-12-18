@@ -1,6 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react'
-import SearchInput from '../common/SearchInput'
+import React, { useState, useEffect } from 'react'
 import WeatherPannel from './WeatherPannel'
 import useSWR from 'swr'
 import { fetcher } from '@/lib/fetchJson'
@@ -17,8 +16,8 @@ import ControlPannel from './ControlPannel'
 import { MarkerLabel, MarkerLabelEnd } from './MarkerLabel'
 import { dateFormatter } from '@/lib/tools'
 
-const latOffset = 0.008
-const lngOffset = 0.0075
+const latOffset = -0.001
+const lngOffset = 0.0081
 
 const MapMark = ({
   end,
@@ -204,16 +203,26 @@ function BanfMap({
   mapKey: string
   databaseId: string
 }) {
-  const [searchWord, setSearchWord] = useState('2972 Westheimer')
-  const inputRef = useRef<HTMLInputElement>(null)
-  const { data: response, error } = useSWR<notionMap[]>(
+  const [inputValue, setInputValue] = useState('2972 Westheimer')
+  const { data: response, mutate } = useSWR<notionMap[]>(
     'http://localhost:3000/api/map',
-    fetcher(searchWord, databaseId)
+    fetcher(inputValue, databaseId)
   )
-  if (error) return null
+  let initialLat,
+    initialLng = 0
   if (!response) return null
-  const [initialLat, initialLng] =
-    response[0].properties.start.rich_text[0].plain_text.split(',').map(Number)
+  if (response.length === 0) {
+    initialLat = 29.751872
+    initialLng = -95.433187
+  } else {
+    initialLat = response[1].properties.end.rich_text[0].plain_text
+      .split(',')
+      .map(Number)[0]
+    initialLng = response[1].properties.end.rich_text[0].plain_text
+      .split(',')
+      .map(Number)[1]
+  }
+
   return (
     <>
       <form
@@ -222,21 +231,23 @@ function BanfMap({
           e.preventDefault()
         }}
       >
-        <SearchInput
-          inputValue={searchWord}
-          setInputValue={setSearchWord}
-          extraStyle={{
-            width: '372px',
-            height: '70px',
-            paddingRight: '30px'
-          }}
-          ref={inputRef}
+        <input
+          id="search"
+          type="text"
+          placeholder="Search Location"
+          className="h-[70px] w-[372px] rounded-[8px] border-[#D0D5DD] bg-white 
+          py-[8px] px-[39px] text-[20px] bg-transparent focus:outline-none"
+          onChange={(e) => setInputValue(e.currentTarget.value)}
         />
         <button
-          onClick={() => {
-            if (inputRef && inputRef.current) {
-              setSearchWord(inputRef.current.value)
-            }
+          onClick={async () => {
+            mutate(
+              await fetcher(
+                inputValue,
+                databaseId
+              )('http://localhost:3000/api/map'),
+              false
+            )
           }}
           className="z-[9999] bg-[#35a0f8fd] text-white h-[67.5px] border-1 border-[#D0D5DD]
           rounded-[0px_8px_8px_0px] text-[10px] px-[5px] absolute top-[1px] right-[1px]"
@@ -275,14 +286,16 @@ function BanfMap({
               completed={data.properties.completed.date?.start!}
             />
           ))}
-          <MapMark
-            end={response[0].properties.start.rich_text[0].plain_text}
-            condition="first"
-            when={response[0].properties.when.rich_text[0].plain_text}
-            pageId={response[0].id}
-            region={response[0].properties.when.rich_text[0].plain_text}
-            resolved={response[0].properties.resolved.checkbox}
-          />
+          {response.length > 0 && (
+            <MapMark
+              end={response[0].properties.start.rich_text[0].plain_text}
+              condition="first"
+              when={response[0].properties.when.rich_text[0].plain_text}
+              pageId={response[0].id}
+              region={response[0].properties.when.rich_text[0].plain_text}
+              resolved={response[0].properties.resolved.checkbox}
+            />
+          )}
         </Map>
         {response.map((data) => {
           return (
@@ -304,7 +317,16 @@ function BanfMap({
             />
           )
         })}
-        <ControlPannel response={response} />
+        {response.length > 0 ? (
+          <ControlPannel response={response} />
+        ) : (
+          <section
+            className="absolute left-[60px] bottom-[55px] bg-white rounded-[12px] 
+    py-[36px] px-[15px] w-[373px] h-[558.67px]"
+          >
+            <span className="text-[20px] font-[700]">There are no records</span>
+          </section>
+        )}
       </APIProvider>
     </>
   )
