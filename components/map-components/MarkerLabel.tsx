@@ -69,7 +69,7 @@ export function MarkerLabel({
             <button
               className="block bg-check mb-[8px]"
               onClick={async () => {
-                await fetchJson('http://localhost:3000/api/map', {
+                await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/map`, {
                   method: 'PATCH',
                   headers: {
                     'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ export function MarkerLabel({
             <button
               className="block bg-remove"
               onClick={async () => {
-                await fetchJson('http://localhost:3000/api/remove', {
+                await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/remove`, {
                   method: 'PATCH',
                   headers: {
                     'Content-Type': 'application/json'

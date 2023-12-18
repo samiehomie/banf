@@ -4,7 +4,7 @@ import PaginatedItems from '@/components/common/PaginatedItmes'
 
 export default async function Page() {
   const response = await fetchJson<notionPageHistory[]>(
-    'http://localhost:3000/api/query',
+    `${process.env.NEXT_PUBLIC_FRONT_URL}/api/query`,
     {
       next: { tags: [`history`] },
       method: 'POST',

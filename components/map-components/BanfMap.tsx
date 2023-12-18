@@ -205,7 +205,7 @@ function BanfMap({
 }) {
   const [inputValue, setInputValue] = useState('2972 Westheimer')
   const { data: response, mutate } = useSWR<notionMap[]>(
-    'http://localhost:3000/api/map',
+    `${process.env.NEXT_PUBLIC_FRONT_URL}/api/map`,
     fetcher(inputValue, databaseId)
   )
   let initialLat,
@@ -245,7 +245,7 @@ function BanfMap({
               await fetcher(
                 inputValue,
                 databaseId
-              )('http://localhost:3000/api/map'),
+              )(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/map`),
               false
             )
           }}

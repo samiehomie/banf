@@ -123,7 +123,7 @@ export const DetailTable = ({
                     <button
                       className="block bg-check"
                       onClick={async () => {
-                        await fetchJson('http://localhost:3000/api/query', {
+                        await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/query`, {
                           method: 'PATCH',
                           headers: {
                             'Content-Type': 'application/json'
@@ -138,7 +138,7 @@ export const DetailTable = ({
                     <button
                       className="block bg-remove"
                       onClick={async () => {
-                        await fetchJson('http://localhost:3000/api/remove', {
+                        await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/remove`, {
                           method: 'PATCH',
                           headers: {
                             'Content-Type': 'application/json'
