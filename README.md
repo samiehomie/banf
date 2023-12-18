@@ -39,7 +39,7 @@ Home과 동일한 확인, 삭제 상호작용을 지원하며 상호작용 후 N
 ### Routes History
 
 [react-paginate](https://www.npmjs.com/package/react-paginate) 라이브러리를 사용해 페이지네이션을 구현했습니다.
-검색창 입력시 많은 리렌더가 발생하므로, lodash의 debounce를 사용해 이를 효율적으로 처리했습니다.
+검색창 입력시 많은 리렌더가 발생하므로 lodash의 debounce를 사용해 이를 효율적으로 처리했습니다.
 
 ![Routes History](/public/table2.gif)
 
