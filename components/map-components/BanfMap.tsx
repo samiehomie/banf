@@ -259,7 +259,6 @@ function BanfMap({
       <APIProvider apiKey={mapKey}>
         <Map
           id="map-main"
-          styles={noMarkMapStyle}
           disableDefaultUI={true}
           zoom={15.8}
           controlSize={0}
