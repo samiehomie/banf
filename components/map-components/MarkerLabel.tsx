@@ -1,7 +1,5 @@
 import React from 'react'
 import fetchJson from '@/lib/fetchJson'
-import { revalidateTagAction } from '@/lib/actions'
-import { fetcher } from '@/lib/fetchJson'
 
 export function MarkerLabelEnd({
   sortClass,

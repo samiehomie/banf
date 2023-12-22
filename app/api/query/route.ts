@@ -27,13 +27,13 @@ export async function PATCH(req: Request) {
   const today = new Date()
   today.setHours(today.getHours() + 9)
   const { pageId } = await req.json()
-
   const response = await notion.pages.update({
     page_id: pageId,
     properties: {
       completed: {
         date: {
-          start: today.toISOString().split('T')[0]
+          start: '2023-12-22'
+          // start: today.toISOString().split('T')[0]
         }
       },
       resolved: {
