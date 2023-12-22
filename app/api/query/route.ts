@@ -32,8 +32,7 @@ export async function PATCH(req: Request) {
     properties: {
       completed: {
         date: {
-          start: '2023-12-22'
-          // start: today.toISOString().split('T')[0]
+          start: today.toISOString().split('T')[0]
         }
       },
       resolved: {
