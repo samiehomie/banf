@@ -1,7 +1,6 @@
 'use server'
-import { revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
-
-export async function revalidateTagAction(tag: string) {
-  revalidateTag(tag)
+export async function revalidatePathAction(path: string) {
+  revalidatePath(path)
 }

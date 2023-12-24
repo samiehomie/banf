@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow'
 import Dropdown from '@/components/common/Dropdown'
 import { dateFormatter } from '@/lib/tools'
 import fetchJson from '@/lib/fetchJson'
-import { revalidateTagAction } from '@/lib/actions'
+import { revalidatePathAction } from '@/lib/actions'
 
 function createDetailData(
   pageId: string,
@@ -123,31 +123,37 @@ export const DetailTable = ({
                     <button
                       className="block bg-check"
                       onClick={async () => {
-                        await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/query`, {
-                          method: 'PATCH',
-                          headers: {
-                            'Content-Type': 'application/json'
-                          },
-                          body: JSON.stringify({
-                            pageId: row.pageId
-                          })
-                        })
-                        await revalidateTagAction('detail')
+                        await fetchJson(
+                          `${process.env.NEXT_PUBLIC_FRONT_URL}/api/query`,
+                          {
+                            method: 'PATCH',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                              pageId: row.pageId
+                            })
+                          }
+                        )
+                        await revalidatePathAction('/(tableview)/detail/@left')
                       }}
                     />
                     <button
                       className="block bg-remove"
                       onClick={async () => {
-                        await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/remove`, {
-                          method: 'PATCH',
-                          headers: {
-                            'Content-Type': 'application/json'
-                          },
-                          body: JSON.stringify({
-                            pageId: row.pageId
-                          })
-                        })
-                        await revalidateTagAction('detail')
+                        await fetchJson(
+                          `${process.env.NEXT_PUBLIC_FRONT_URL}/api/remove`,
+                          {
+                            method: 'PATCH',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                              pageId: row.pageId
+                            })
+                          }
+                        )
+                        await revalidatePathAction('/(tableview)/detail/@right')
                       }}
                     />
                   </>
