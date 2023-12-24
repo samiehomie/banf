@@ -1,26 +1,29 @@
+import { NextResponse, NextRequest } from 'next/server'
 import { Client } from '@notionhq/client'
 
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
-export async function POST(req: Request) {
+export async function GET(req: NextRequest) {
+  const pageId = req.nextUrl.searchParams.get('pageId') as string
+  const response = await notion.pages.retrieve({
+    page_id: pageId
+  })
+  return NextResponse.json(response)
+}
+
+export async function POST(req: NextRequest) {
   const { databaseId, region } = await req.json()
   const response = await notion.databases.query({
     database_id: databaseId,
     filter: {
       and: [
         {
-          property: 'show',
-          checkbox: {
-            equals: true
-          }
-        },
-        {
           property: 'region',
           rich_text: {
             contains: region
           }
         }
-      ],
+      ]
     },
     sorts: [
       {
@@ -29,10 +32,10 @@ export async function POST(req: Request) {
       }
     ]
   })
-  return Response.json(response.results)
+  return NextResponse.json(response.results)
 }
 
-export async function PATCH(req: Request) {
+export async function PATCH(req: NextRequest) {
   const today = new Date()
   today.setHours(today.getHours() + 9)
   const { pageId } = await req.json()
@@ -50,5 +53,5 @@ export async function PATCH(req: Request) {
       }
     }
   })
-  return Response.json(response)
+  return NextResponse.json(response)
 }

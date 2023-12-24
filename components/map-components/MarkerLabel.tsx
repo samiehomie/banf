@@ -1,5 +1,6 @@
 import React from 'react'
 import fetchJson from '@/lib/fetchJson'
+import { useSWRConfig } from 'swr'
 
 export function MarkerLabelEnd({
   sortClass,
@@ -38,7 +39,7 @@ export function MarkerLabel({
   sortText,
   pageId,
   resolved,
-  mapMutate
+
 }: {
   timestamp: string
   position: string
@@ -46,8 +47,9 @@ export function MarkerLabel({
   sortText: string
   pageId: string
   resolved: boolean
-  mapMutate: (arg: any, arg2: any) => any
+  
 }) {
+  const { mutate } = useSWRConfig()
   return (
     <div
       className="flex justify-evenly items-center box-content w-[261px] h-[62px] rounded-[12px] 
@@ -70,7 +72,8 @@ export function MarkerLabel({
             <button
               className="block bg-check mb-[8px]"
               onClick={async () => {
-                mapMutate(
+                mutate(
+                  `${process.env.NEXT_PUBLIC_FRONT_URL}/api/map?pageId=${pageId}`,
                   await fetchJson(
                     `${process.env.NEXT_PUBLIC_FRONT_URL}/api/map`,
                     {
@@ -82,27 +85,15 @@ export function MarkerLabel({
                         pageId: pageId
                       })
                     }
-                  ),
-                  false
+                  )
                 )
               }}
-              // onClick={async () => {
-              //   await fetchJson(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/map`, {
-              //     method: 'PATCH',
-              //     headers: {
-              //       'Content-Type': 'application/json'
-              //     },
-              //     body: JSON.stringify({
-              //       pageId: pageId
-              //     })
-              //   })
-              //   await revalidateTagAction('map')
-              // }}
             />
             <button
               className="block bg-remove"
               onClick={async () => {
-                mapMutate(
+                mutate(
+                  `${process.env.NEXT_PUBLIC_FRONT_URL}/api/map?pageId=${pageId}`,
                   await fetchJson(
                     `${process.env.NEXT_PUBLIC_FRONT_URL}/api/remove`,
                     {
@@ -114,8 +105,7 @@ export function MarkerLabel({
                         pageId: pageId
                       })
                     }
-                  ),
-                  false
+                  )
                 )
               }}
             />

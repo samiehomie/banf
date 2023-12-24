@@ -258,7 +258,7 @@ type notionMap = {
       type: 'select'
       select: {
         id: string
-        name: 'cold' | 'hot' | 'normal' | 'danger'
+        name: 'cold' | 'hot' | 'normal' | 'danger' | 'start' | 'end'
       }
     }
     show: {
